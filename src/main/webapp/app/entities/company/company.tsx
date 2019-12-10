@@ -2,52 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction, getSortState, IPaginationBaseState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { Translate, ICrudGetAllAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './company.reducer';
 import { ICompany } from 'app/shared/model/company.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { ITEMS_PER_PAGE } from 'app/shared/util/pagination.constants';
 
 export interface ICompanyProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
-export type ICompanyState = IPaginationBaseState;
-
-export class Company extends React.Component<ICompanyProps, ICompanyState> {
-  state: ICompanyState = {
-    ...getSortState(this.props.location, ITEMS_PER_PAGE)
-  };
-
+export class Company extends React.Component<ICompanyProps> {
   componentDidMount() {
-    this.getEntities();
+    this.props.getEntities();
   }
-
-  sort = prop => () => {
-    this.setState(
-      {
-        order: this.state.order === 'asc' ? 'desc' : 'asc',
-        sort: prop
-      },
-      () => this.sortEntities()
-    );
-  };
-
-  sortEntities() {
-    this.getEntities();
-    this.props.history.push(`${this.props.location.pathname}?page=${this.state.activePage}&sort=${this.state.sort},${this.state.order}`);
-  }
-
-  handlePagination = activePage => this.setState({ activePage }, () => this.sortEntities());
-
-  getEntities = () => {
-    const { activePage, itemsPerPage, sort, order } = this.state;
-    this.props.getEntities(activePage - 1, itemsPerPage, `${sort},${order}`);
-  };
 
   render() {
-    const { companyList, match, totalItems } = this.props;
+    const { companyList, match } = this.props;
     return (
       <div>
         <h2 id="company-heading">
@@ -63,8 +34,11 @@ export class Company extends React.Component<ICompanyProps, ICompanyState> {
             <Table responsive aria-describedby="company-heading">
               <thead>
                 <tr>
-                  <th className="hand" onClick={this.sort('id')}>
-                    <Translate contentKey="global.field.id">ID</Translate> <FontAwesomeIcon icon="sort" />
+                  <th>
+                    <Translate contentKey="global.field.id">ID</Translate>
+                  </th>
+                  <th>
+                    <Translate contentKey="sampleMultitenancyAppReactApp.company.name">Name</Translate>
                   </th>
                   <th />
                 </tr>
@@ -77,6 +51,7 @@ export class Company extends React.Component<ICompanyProps, ICompanyState> {
                         {company.id}
                       </Button>
                     </td>
+                    <td>{company.name}</td>
                     <td className="text-right">
                       <div className="btn-group flex-btn-group-container">
                         <Button tag={Link} to={`${match.url}/${company.id}`} color="info" size="sm">
@@ -109,28 +84,13 @@ export class Company extends React.Component<ICompanyProps, ICompanyState> {
             </div>
           )}
         </div>
-        <div className={companyList && companyList.length > 0 ? '' : 'd-none'}>
-          <Row className="justify-content-center">
-            <JhiItemCount page={this.state.activePage} total={totalItems} itemsPerPage={this.state.itemsPerPage} i18nEnabled />
-          </Row>
-          <Row className="justify-content-center">
-            <JhiPagination
-              activePage={this.state.activePage}
-              onSelect={this.handlePagination}
-              maxButtons={5}
-              itemsPerPage={this.state.itemsPerPage}
-              totalItems={this.props.totalItems}
-            />
-          </Row>
-        </div>
       </div>
     );
   }
 }
 
 const mapStateToProps = ({ company }: IRootState) => ({
-  companyList: company.entities,
-  totalItems: company.totalItems
+  companyList: company.entities
 });
 
 const mapDispatchToProps = {

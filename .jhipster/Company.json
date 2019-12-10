@@ -2,13 +2,20 @@
     "fluentMethods": true,
     "clientRootFolder": "",
     "relationships": [],
-    "fields": [],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        }
+    ],
     "changelogDate": "20191206124054",
     "dto": "no",
     "searchEngine": false,
-    "service": "serviceClass",
+    "service": "no",
     "entityTableName": "company",
     "databaseType": "sql",
     "jpaMetamodelFiltering": false,
-    "pagination": "pagination"
+    "pagination": "no",
+    "name": "Company",
+    "applications": "*"
 }

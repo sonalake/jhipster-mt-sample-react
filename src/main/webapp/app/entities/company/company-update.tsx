@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col, Label } from 'reactstrap';
-import { AvFeedback, AvForm, AvGroup, AvInput } from 'availity-reactstrap-validation';
+import { AvFeedback, AvForm, AvGroup, AvInput, AvField } from 'availity-reactstrap-validation';
 import { Translate, translate, ICrudGetAction, ICrudGetAllAction, ICrudPutAction } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { IRootState } from 'app/shared/reducers';
@@ -87,6 +87,12 @@ export class CompanyUpdate extends React.Component<ICompanyUpdateProps, ICompany
                     <AvInput id="company-id" type="text" className="form-control" name="id" required readOnly />
                   </AvGroup>
                 ) : null}
+                <AvGroup>
+                  <Label id="nameLabel" for="company-name">
+                    <Translate contentKey="sampleMultitenancyAppReactApp.company.name">Name</Translate>
+                  </Label>
+                  <AvField id="company-name" type="text" name="name" />
+                </AvGroup>
                 <Button tag={Link} id="cancel-save" to="/entity/company" replace color="info">
                   <FontAwesomeIcon icon="arrow-left" />
                   &nbsp;

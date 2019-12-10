@@ -14,6 +14,9 @@ const adminMenuItems = (
     <MenuItem icon="asterisk" to="/entity/company">
       <Translate contentKey="sampleMultitenancyAppReactApp.company.home.title" />
     </MenuItem>
+    <MenuItem icon="asterisk" to="/entity/company">
+      <Translate contentKey="sampleMultitenancyAppReactApp.company.home.title" />
+    </MenuItem>
     <MenuItem icon="tachometer-alt" to="/admin/metrics">
       <Translate contentKey="global.menu.admin.metrics">Metrics</Translate>
     </MenuItem>

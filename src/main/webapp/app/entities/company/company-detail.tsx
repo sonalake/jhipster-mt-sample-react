@@ -25,7 +25,14 @@ export class CompanyDetail extends React.Component<ICompanyDetailProps> {
           <h2>
             <Translate contentKey="sampleMultitenancyAppReactApp.company.detail.title">Company</Translate> [<b>{companyEntity.id}</b>]
           </h2>
-          <dl className="jh-entity-details" />
+          <dl className="jh-entity-details">
+            <dt>
+              <span id="name">
+                <Translate contentKey="sampleMultitenancyAppReactApp.company.name">Name</Translate>
+              </span>
+            </dt>
+            <dd>{companyEntity.name}</dd>
+          </dl>
           <Button tag={Link} to="/entity/company" replace color="info">
             <FontAwesomeIcon icon="arrow-left" />{' '}
             <span className="d-none d-md-inline">
